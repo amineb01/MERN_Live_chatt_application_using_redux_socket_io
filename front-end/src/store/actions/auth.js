@@ -55,9 +55,9 @@ export const auth = (email, password, isSignup) => {
             email: email,
             password: password,
         };
-        let url = 'http://localhost:9999/api/admins';
+        let url = 'http://192.168.1.17:9999/api/admins';
         if (!isSignup) {
-            url = 'http://localhost:9999/api/auth';
+            url = 'http://192.168.1.17:9999/api/auth';
         }
         axios.post(url, authData)
             .then(response => {

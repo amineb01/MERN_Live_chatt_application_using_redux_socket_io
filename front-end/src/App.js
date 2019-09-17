@@ -4,6 +4,7 @@ import './App.css';
 import { Route } from 'react-router-dom';
 
 import HomePage  from './Containers/HomePage/HomePage.jsx';
+import ChatRoom  from './Containers/ChatRoom/ChatRoom.jsx';
 import AboutPage from './Containers/AboutPage/AboutPage.jsx';
 import LoginPage from './Containers/LoginPage/LoginPage.jsx';
 import Layout from './Hoc/Layout/Layout';
@@ -14,6 +15,7 @@ function App(props) {
   return (
     <Layout>
       <Route exact path='/' component={props => <HomePage {...props} />} />
+      <Route exact path='/chatRoom' component={props => <ChatRoom {...props} />} />
       <Route path='/about'  component={props => <AboutPage {...props} />} />
       <Route path='/login'  component={props => <LoginPage {...props} />} />
     </Layout>

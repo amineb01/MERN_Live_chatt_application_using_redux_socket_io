@@ -7,5 +7,6 @@ export {
 } from './auth';
 
 export {
-    connections
+    connections,
+    newMessage
 } from './socket';

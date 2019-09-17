@@ -1,0 +1,13 @@
+.own_msg {
+  text-align: right;
+  margin-right: 50px;
+  background-color: #a1a1ea !important;
+  border-radius: 12px;
+  display: block;
+
+
+}
+.own_msg td{
+  width: 50%
+
+}

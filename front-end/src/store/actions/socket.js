@@ -16,3 +16,18 @@ export const connections = ( data ) => {
         dispatch(newConnections( data ));
     };
 };
+
+
+export const addNewMessage = (data) => {
+    return {
+        type    : actionTypes.NEW_MESSAGE,
+        message: data.message
+      };
+};
+
+export const newMessage = ( data ) => {
+
+    return dispatch => {
+        dispatch(addNewMessage( data ));
+    };
+};
