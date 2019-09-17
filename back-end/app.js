@@ -30,35 +30,7 @@ app.use(express.json());
 
 
 
-// io.on('connection', ( socket ) => {
-// console.log(socket);
-//   socket.on('register', ( register ) => {
-//     console.log(register);
-//
-//     if ( register.user ){
-//       let user = users.find((element) => {  return element.user=== register.user})
-//       if ( !user ) users.push({socketID:socket.id,user:register.user})
-//       else user.socketID = socket.id
-//        }
-//   })
-//
-//
-//   if ( users.length>0 ){
-//     console.log(users);
-//     socket.emit("newConnection", { users: users });
-//   }
-//
-//
-//   socket.on('event1', data => {
-//     if ( users.length>0 ){
-//       let user =users.find((element) => {  return element.user=== data.to})
-//       if (user) {
-//         io.sockets.sockets[user.socketID].emit("event1", { from: data.from, to: data.to, msg: data.msg });
-//       }
-//     }
-//   });
-//
-// });
+
 
 require('./startup/routes')( app )
 require('./startup/db')()
