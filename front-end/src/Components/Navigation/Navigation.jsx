@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import  './Navigation.css';
 import * as actions from '../../store/actions/index';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 
 const Navigation = ( props ) => (
@@ -32,12 +33,25 @@ const Navigation = ( props ) => (
             About
           </Link>
       </li>
+      { props.isAuthenticated &&
+       <li className="grid-cell" onClick={()=>props.onLogout() }>
+        Logout
+       </li>
+      }
     </ul>
   </div>
 );
 
   const mapStateToProps = (state) => {
-    return {isAuthenticated: state.auth.token !== null}
+    return {
+      isAuthenticated: state.auth.token !== null,
+      authRedirectPath: state.auth.authRedirectPath
+    }
   }
+  const mapDispatchToProps = dispatch => {
+      return {
+          onLogout: ( ) => dispatch( actions.logout() )
+      };
+  };
 
-export default connect(mapStateToProps)(Navigation);
+export default connect(mapStateToProps, mapDispatchToProps)(Navigation);

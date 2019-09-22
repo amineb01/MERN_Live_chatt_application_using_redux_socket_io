@@ -5,8 +5,8 @@ import React, { PropTypes } from 'react';
 import * as actions from '../../store/actions/index';
 import { connect } from 'react-redux';
 import openSocket from 'socket.io-client';
-const socket = openSocket('http://192.168.1.17:9999');
-
+const socket = openSocket('http://192.168.2.108:9999');
+// 192.168.1.17
 class Layout extends React.Component {
 
 
@@ -14,13 +14,10 @@ class Layout extends React.Component {
     this.props.onTryAutoSignup ();
     if (!this.props.isAuthenticated) {
       if( this.props.userId && this.props.email){
-        console.log("componentDidMount");
         this.subscribeToChanel( { userId:this.props.userId, email:this.props.email } )
       }
     }
-    socket.on('newConnection', data =>{
-      this.props.newConnections( data )
-    });
+
   }
 
   subscribeToChanel( user ){
@@ -29,12 +26,13 @@ class Layout extends React.Component {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.userId !== this.props.userId && this.props.userId ) {
-
       this.subscribeToChanel( { userId:this.props.userId, email:this.props.email } )
       socket.on('event1', data =>{
-          console.log("event1",data);
           this.addMessageToArray( data )
         });
+      socket.on('newConnection', data =>{
+        this.props.newConnections( data )
+      });
     }
   }
 

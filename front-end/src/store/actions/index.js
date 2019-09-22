@@ -8,5 +8,6 @@ export {
 
 export {
     connections,
-    newMessage
+    newMessage,
+    deleteMessages
 } from './socket';

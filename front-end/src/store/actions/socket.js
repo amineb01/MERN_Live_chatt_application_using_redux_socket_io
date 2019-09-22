@@ -25,9 +25,22 @@ export const addNewMessage = (data) => {
       };
 };
 
+export const clearMessages = (data) => {
+    return {
+        type    : actionTypes.CLEAR_MESSAGE
+      };
+};
+
 export const newMessage = ( data ) => {
 
     return dispatch => {
         dispatch(addNewMessage( data ));
+    };
+};
+
+export const deleteMessages = ( data ) => {
+
+    return dispatch => {
+        dispatch(clearMessages());
     };
 };

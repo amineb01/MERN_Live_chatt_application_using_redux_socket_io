@@ -20,7 +20,7 @@ const _ = require('lodash');
     const token = account.generateToken();
     let result = _.pick(account, ['_id', 'email' ]);
     result.token = token;
-    result.expiresIn =3600;
+    result.expiresIn =60;
     return res.status(200).send({ result: result, is_successful:true })
   })
 

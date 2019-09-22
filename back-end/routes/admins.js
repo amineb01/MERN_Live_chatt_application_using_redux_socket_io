@@ -30,7 +30,7 @@ const isAdmin = require("../midelwares/isAdmin")
     let result = _.pick( admin, [ '_id', 'email' ] );
     const token = admin.generateToken();
     result.token = token;
-    result.expiresIn = 3600;
+    result.expiresIn = 60;
 
     return res.status(200).send({ result: result, is_successful:true })
 

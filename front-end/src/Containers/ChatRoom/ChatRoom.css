@@ -17,10 +17,8 @@
   padding: 0
 }
 .ChatRoom  .chat-container .row .bottom-input{
-  bottom: 51px;
   width : 90%;
-  position: absolute;
-}
+  }
 
 .ChatRoom  .chat-container table{
 
@@ -29,7 +27,7 @@
 .ChatRoom  .chat-container .tableContainer{
   overflow-y: scroll;
   overflow-x: hidden;
-  height: 80%;
+  height: 566px;
 }
 
 .ChatRoom  .chat-container .ConnectedUsers{
@@ -41,4 +39,21 @@
 .ConnectedUsers .tableContainer .table tr:hover {
   background-color: grey;
   cursor: pointer;
+}
+
+.no-receiver{
+  text-align: center;
+  height: 100%;
+  position: relative;
+  border: 3px solid grey;
+}
+.no-receiver p{
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  right: 34%;
+  font-size: 20px;
+  font-weight: bold;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
 }

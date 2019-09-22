@@ -4,5 +4,6 @@ export const AUTH_FAIL = 'AUTH_FAIL';
 export const AUTH_LOGOUT = 'AUTH_LOGOUT';
 export const NEW_CONNECTION = 'NEW_CONNECTION';
 export const NEW_MESSAGE = 'NEW_MESSAGE';
+export const CLEAR_MESSAGE = 'CLEAR_MESSAGE';
 
 export const SET_AUTH_REDIRECT_PATH = 'SET_AUTH_REDIRECT_PATH';

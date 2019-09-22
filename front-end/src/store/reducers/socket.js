@@ -16,11 +16,16 @@ const newMessageSuccess = ( state, action ) => {
     return updateObject( state, { messages: messagesArray } );
 };
 
+const clearMessages = ( state, action ) => {
+    return updateObject( state, { messages: [] } );
+};
 
 const reducer = ( state = initialState , action ) => {
   switch ( action.type ) {
       case actionTypes.NEW_CONNECTION   : return newConnectionSuccess(state, action);
       case actionTypes.NEW_MESSAGE      : return newMessageSuccess(state, action);
+      case actionTypes.CLEAR_MESSAGE    : return clearMessages(state, action);
+
       default:
           return state;
   }

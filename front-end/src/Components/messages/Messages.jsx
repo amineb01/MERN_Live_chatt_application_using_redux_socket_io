@@ -8,7 +8,7 @@ const Messages = ( props ) => (
     {props.messages && props.messages.map((message,index) =>
 
       <tr  key={index} >
-        <td  className={ (props.connectedUserEmail === message.sender? 'own_msg ' : '')} >{message.msg}</td>
+        <td  className={ (props.connectedUserID == message.sender? 'own_msg ' : '')} >{message.msg}</td>
       </tr>
     )}
     </tbody>
