@@ -176,13 +176,16 @@ color: rgba(255,255,255,0.6);
   bottom: -15px;
   color: rgba(255,255,255,0.5);
   font-size: 10px;
+  min-width: 180px
+
 }
 .msg_time_send{
   position: absolute;
-  right:0;
+  right:-97px;
   bottom: -15px;
   color: rgba(255,255,255,0.5);
   font-size: 10px;
+  min-width: 180px
 }
 .msg_head{
   position: relative;

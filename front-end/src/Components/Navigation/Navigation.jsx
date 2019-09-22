@@ -34,7 +34,7 @@ const Navigation = ( props ) => (
           </Link>
       </li>
       { props.isAuthenticated &&
-       <li className="grid-cell" onClick={()=>props.onLogout() }>
+       <li className="grid-cell" onClick={()=>{props.socket.emit('unsubscribeToChanel', props.socket.id ) ; props.onLogout()} }>
         Logout
        </li>
       }
@@ -45,7 +45,8 @@ const Navigation = ( props ) => (
   const mapStateToProps = (state) => {
     return {
       isAuthenticated: state.auth.token !== null,
-      authRedirectPath: state.auth.authRedirectPath
+      authRedirectPath: state.auth.authRedirectPath,
+      socket: state.socket.socket
     }
   }
   const mapDispatchToProps = dispatch => {

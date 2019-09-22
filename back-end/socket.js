@@ -7,10 +7,11 @@ module.exports = function( server, ConnectedUsers) {
   io.on('connection', ( client ) => {
     client.on('subscribeToChanel', ( user ) => {
       updateConnectedUsers( client, user )
-      setTimeout(() => {
-        if ( ConnectedUsers.length>0 ) client.emit("newConnection", ConnectedUsers);
-      }, 100);
     });
+
+    setInterval(() => {
+      if ( ConnectedUsers.length>0 ) client.emit("newConnection", ConnectedUsers);
+    }, 1000);
 
     client.on('event1', async ( data ) => {
       if ( ConnectedUsers.length>0 ){
@@ -19,12 +20,23 @@ module.exports = function( server, ConnectedUsers) {
         if (receiver && sender) {
           const msg = { receiver: receiver.userId, sender: sender.userId, msg: data.msg }
           let savedMsg = await saveMessages( msg )
+
           if (io.sockets.sockets[sender.socketID]) io.sockets.sockets[sender.socketID].emit("event1", msg );
-          if (io.sockets.sockets[receiver.socketID]) io.sockets.sockets[receiver.socketID].emit("event1", msg );
+          if (io.sockets.sockets[receiver.socketID] && receiver != sender) io.sockets.sockets[receiver.socketID].emit("event1", msg );
         }
       }
     });
-    client.on("disconnect", () => client.emit("newConnection", ConnectedUsers));
+
+    client.on("disconnect", (data) => {
+      ConnectedUsers   = ConnectedUsers.filter((element) =>element.socketID != client.conn.id)
+    })
+
+    client.on("unsubscribeToChanel", (socketID) => {
+      ConnectedUsers   = ConnectedUsers.filter((element) =>element.socketID != socketID)
+    })
+
+
+
   });
 
   function updateConnectedUsers( client, user ){

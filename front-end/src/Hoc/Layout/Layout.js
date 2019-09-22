@@ -6,8 +6,12 @@ import * as actions from '../../store/actions/index';
 import { connect } from 'react-redux';
 import openSocket from 'socket.io-client';
 const socket = openSocket('http://192.168.2.108:9999');
-// 192.168.1.17
+// 192.168.2.108
 class Layout extends React.Component {
+  constructor(props) {
+    super(props);
+    this.props.newSocketObj( socket )
+  }
 
 
   componentDidMount(){
@@ -31,7 +35,15 @@ class Layout extends React.Component {
           this.addMessageToArray( data )
         });
       socket.on('newConnection', data =>{
+        console.log("newConnection",data)
         this.props.newConnections( data )
+      });
+      socket.on('disconnect', data =>{
+        console.log("disconnect",data)
+     
+        this.props.newConnections( data )
+        // this.props.removeConnection( data )
+        socket.disconnect();
       });
     }
   }
@@ -64,7 +76,9 @@ const mapDispatchToProps = dispatch => {
   return {
     newConnections : ( users ) => dispatch(actions.connections( { users:users} )),
     onTryAutoSignup: () => dispatch( actions.authCheckState() ),
-    newMessage     : ( data ) => dispatch(actions.newMessage({ message:data } ))
+    newMessage     : ( data ) => dispatch(actions.newMessage({ message:data } )),
+    newSocketObj   : ( data ) => dispatch(actions.newSocketObj({ socket:data } ))
+
   };
 };
 

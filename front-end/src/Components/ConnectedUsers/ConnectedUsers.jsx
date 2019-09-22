@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 
 const ConnectedUsers = ( props ) => (
-  <ui className="contacts">
+  <ul className="contacts">
   { props.users && props.users.map(user =>
     <li className={(props.receiver == user?  'active' : '')} onClick={()=>props.clicked(user)} key={user.socketID}>
       <div className="d-flex bd-highlight">
@@ -17,7 +17,7 @@ const ConnectedUsers = ( props ) => (
     </li>
   )}
 
-  </ui>
+  </ul>
 
 );
 

@@ -5,11 +5,9 @@ import { InputGroup, FormControl, Button, Container, Row, Col, Alert } from "rea
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import * as actions from '../../store/actions/index';
-import openSocket from 'socket.io-client';
 import Messages from '../../Components/messages/Messages.jsx';
 import ConnectedUsers from '../../Components/ConnectedUsers/ConnectedUsers.jsx';
 import axios from 'axios';
-const socket = openSocket('http://192.168.2.108:9999');
 
 
 class ChatRoom extends React.Component {
@@ -25,12 +23,7 @@ class ChatRoom extends React.Component {
   componentDidMount(){
 
     if (!this.props.isAuthenticated) {
-      // if( this.props.userId && this.props.email){
-      //   console.log (this.props.userId)
-      //   this.subscribeToChanel( { userId:this.props.userId, email:this.props.email } )
-      // }
-      socket.on('event1', data =>{
-
+      this.props.socket.on('event1', data =>{
         let receiver   =this.props.users.find((element) => {  return element.email=== data.receiver})
         if(receiver){
           this.selectReceiver(receiver)
@@ -43,10 +36,11 @@ class ChatRoom extends React.Component {
   }
 
   subscribeToChanel( user ){
-    socket.emit('subscribeToChanel', user );
+    this.props.socket.emit('subscribeToChanel', user );
   }
   addMessageToArray = ( data ) => {
-    this.props.newMessage( { receiver:data.receiver, msg: data.msg, sender:data.sender } )
+    this.props.newMessage( { sentAt:data.sentAt, receiver:data.receiver, msg: data.msg, sender:data.sender } )
+
   }
 
 
@@ -63,17 +57,22 @@ class ChatRoom extends React.Component {
      }
     axios.get('http://192.168.2.108:9999/api/messages', axiosConfig)
         .then(response => {
-          response.data.map(message => this.addMessageToArray( { receiver:message.receiver._id, msg: message.msg, sender:message.sender._id } ));
+          response.data.map(message => this.addMessageToArray( { sentAt:message.sentAt, receiver:message.receiver._id, msg: message.msg, sender:message.sender._id } ));
+          var objDiv = document.getElementById("msg_container");
+          objDiv.scrollTop = objDiv.scrollHeight;
+
         })
         .catch(err => {
           // dispatch( authFail( err.response.data.message ) );
         });
   }
   sendMessage = () => {
-    console.log("ee");
+    if (this.state.receiver)  this.props.socket.emit('event1', { receiver:this.state.receiver.email, msg: this.state.msg, sender:this.props.email, socketId:this.props.socket.id })
+    setTimeout(()=>{
+      var objDiv = document.getElementById("msg_container");
+      objDiv.scrollTop = objDiv.scrollHeight;
+    },200)
 
-    socket.emit('event1', { receiver:this.state.receiver.email, msg: this.state.msg, sender:this.props.email, socketId:socket.id })
-    // this.addMessageToArray( { receiver:this.state.receiver.email, msg: this.state.msg, sender:this.props.email } )
 
   }
 
@@ -116,7 +115,7 @@ class ChatRoom extends React.Component {
                   {this.state.receiver &&
                   <div className="user_info">
                     <span>{"Chat with "+this.state.receiver.email}</span>
-                    <p>1767 Messages</p>
+                    <p>{this.props.messages.length + " Messages"}</p>
                   </div>
                   }
                   <div className="video_cam">
@@ -134,7 +133,7 @@ class ChatRoom extends React.Component {
                   </ul>
                 </div>
               </div>
-              <div className="card-body msg_card_body">
+              <div className="card-body msg_card_body" id="msg_container">
                 <Messages messages={this.props.messages} connectedUserID={this.props.userId}/>
 
               </div>
@@ -148,7 +147,7 @@ class ChatRoom extends React.Component {
                   name             = 'msg'
                   onChange         ={(event)=>this.handleChange(event.target.name,event.target.value)}
                   className="form-control type_msg" placeholder="Type your message..."></textarea>
-                  <div className="input-group-append" onClick={this.sendMessage}>
+                  <div className="input-group-append"  onClick={this.sendMessage}>
                     <span className="input-group-text send_btn" ><i className="fas fa-location-arrow"></i></span>
                   </div>
                 </div>
@@ -168,7 +167,8 @@ const mapStateToProps = state => {
         email: state.auth.email,
         userId: state.auth.userId,
         users: state.socket.users,
-        messages: state.socket.messages
+        messages: state.socket.messages,
+        socket: state.socket.socket
     };
 };
 

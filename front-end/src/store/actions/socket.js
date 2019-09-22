@@ -2,7 +2,12 @@ import axios from 'axios';
 
 import * as actionTypes from './actionTypes';
 
-
+export const addNewSocketObj = (data) => {
+    return {
+        type : actionTypes.NEW_SOCKET,
+        socket: data.socket
+      };
+};
 
 export const newConnections = (data) => {
     return {
@@ -35,6 +40,13 @@ export const newMessage = ( data ) => {
 
     return dispatch => {
         dispatch(addNewMessage( data ));
+    };
+};
+
+export const newSocketObj = ( data ) => {
+
+    return dispatch => {
+        dispatch(addNewSocketObj( data ));
     };
 };
 

@@ -9,5 +9,6 @@ export {
 export {
     connections,
     newMessage,
-    deleteMessages
+    deleteMessages,
+    newSocketObj
 } from './socket';
