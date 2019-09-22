@@ -70,6 +70,7 @@ class ChatRoom extends React.Component {
         });
   }
   sendMessage = () => {
+    console.log("ee");
 
     socket.emit('event1', { receiver:this.state.receiver.email, msg: this.state.msg, sender:this.props.email, socketId:socket.id })
     // this.addMessageToArray( { receiver:this.state.receiver.email, msg: this.state.msg, sender:this.props.email } )
@@ -88,48 +89,74 @@ class ChatRoom extends React.Component {
     return (
       <div className="ChatRoom">
       { authRedirect }
-      <Container fluid={true} className="chat-container">
-        <Row>
-        {this.state.receiver &&
-          <Col xs={8}>
-
-            <div className="tableContainer">
-              <div className="receiver">
-                <Alert  variant="primary">
-                  {this.state.receiver.email}
-                </Alert>
+      <div className="container-fluid h-100">
+        <div className="row justify-content-center h-100">
+          <div className="col-md-4 col-xl-3 chat"><div className="card mb-sm-3 mb-md-0 contacts_card">
+            <div className="card-header">
+              <div className="input-group">
+                <input type="text" placeholder="Search..." name="" className="form-control search" />
+                <div className="input-group-prepend">
+                  <span className="input-group-text search_btn"><i className="fas fa-search"></i></span>
+                </div>
               </div>
-              <Messages messages={this.props.messages} connectedUserID={this.props.userId}/>
             </div>
-
-            <InputGroup className="mb-3 bottom-input">
-               <FormControl
-                 value            ={this.state.msg || ''}
-                 name             = 'msg'
-                 onChange         ={(event)=>this.handleChange(event.target.name,event.target.value)}
-                 placeholder      ="message's content"
-                 aria-label       ="message's content"
-                 aria-describedby ="basic-addon2"
-               />
-               <InputGroup.Append>
-                 <Button variant="outline-secondary" onClick={this.sendMessage} >Envoyer</Button>
-               </InputGroup.Append>
-             </InputGroup>
-
-          </Col>
-          }
-          {!this.state.receiver &&
-           <Col xs={8}>
-            <div className="no-receiver">
-            <p> aucun utilisateur sélectionné </p>
+            <div className="card-body contacts_body">
+              <ConnectedUsers receiver={this.state.receiver} clicked={this.selectReceiver} users={this.props.users} />
             </div>
-           </Col>
-          }
-          <Col xs={4}>
-            <ConnectedUsers clicked={this.selectReceiver} users={this.props.users} />
-          </Col>
-        </Row>
-      </Container>
+            <div className="card-footer"></div>
+          </div></div>
+          <div className="col-md-8 col-xl-6 chat">
+            <div className="card">
+              <div className="card-header msg_head">
+                <div className="d-flex bd-highlight">
+                  <div className="img_cont">
+                    <img src="https://www.khaama.com/wp-content/uploads/2019/02/Afghan-Singer-Ghawgha-Taban-880x672-880x672.jpg" className="rounded-circle user_img" />
+                    <span className="online_icon"></span>
+                  </div>
+                  {this.state.receiver &&
+                  <div className="user_info">
+                    <span>{"Chat with "+this.state.receiver.email}</span>
+                    <p>1767 Messages</p>
+                  </div>
+                  }
+                  <div className="video_cam">
+                    <span><i className="fas fa-video"></i></span>
+                    <span><i className="fas fa-phone"></i></span>
+                  </div>
+                </div>
+                <span id="action_menu_btn"><i className="fas fa-ellipsis-v"></i></span>
+                <div className="action_menu">
+                  <ul>
+                    <li><i className="fas fa-user-circle"></i> View profile</li>
+                    <li><i className="fas fa-users"></i> Add to close friends</li>
+                    <li><i className="fas fa-plus"></i> Add to group</li>
+                    <li><i className="fas fa-ban"></i> Block</li>
+                  </ul>
+                </div>
+              </div>
+              <div className="card-body msg_card_body">
+                <Messages messages={this.props.messages} connectedUserID={this.props.userId}/>
+
+              </div>
+              <div className="card-footer">
+                <div className="input-group">
+                  <div className="input-group-append">
+                    <span className="input-group-text attach_btn"><i className="fas fa-paperclip"></i></span>
+                  </div>
+                  <textarea
+                  value            ={this.state.msg || ''}
+                  name             = 'msg'
+                  onChange         ={(event)=>this.handleChange(event.target.name,event.target.value)}
+                  className="form-control type_msg" placeholder="Type your message..."></textarea>
+                  <div className="input-group-append" onClick={this.sendMessage}>
+                    <span className="input-group-text send_btn" ><i className="fas fa-location-arrow"></i></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       </div>
     );
   }

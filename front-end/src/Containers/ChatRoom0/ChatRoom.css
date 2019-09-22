@@ -1,0 +1,59 @@
+
+.ChatRoom {
+  width:100%;
+  height: 100%;
+  position: fixed;
+}
+.ChatRoom  .chat-container{
+  width:100%;
+  height: 100%;
+
+}
+.ChatRoom  .chat-container .row{
+  height: 100%;
+  position: relative;
+}
+.ChatRoom  .chat-container .row >Col {
+  padding: 0
+}
+.ChatRoom  .chat-container .row .bottom-input{
+  width : 90%;
+  }
+
+.ChatRoom  .chat-container table{
+
+  width: 107%;
+}
+.ChatRoom  .chat-container .tableContainer{
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 566px;
+}
+
+.ChatRoom  .chat-container .ConnectedUsers{
+  height: 100%;
+  width:100%;
+
+}
+
+.ConnectedUsers .tableContainer .table tr:hover {
+  background-color: grey;
+  cursor: pointer;
+}
+
+.no-receiver{
+  text-align: center;
+  height: 100%;
+  position: relative;
+  border: 3px solid grey;
+}
+.no-receiver p{
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  right: 34%;
+  font-size: 20px;
+  font-weight: bold;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}

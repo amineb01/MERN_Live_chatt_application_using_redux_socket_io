@@ -8,7 +8,6 @@ module.exports = function( server, ConnectedUsers) {
     client.on('subscribeToChanel', ( user ) => {
       updateConnectedUsers( client, user )
       setTimeout(() => {
-        console.log(ConnectedUsers)
         if ( ConnectedUsers.length>0 ) client.emit("newConnection", ConnectedUsers);
       }, 100);
     });
