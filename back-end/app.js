@@ -29,9 +29,6 @@ app.use(express.json());
 
 
 
-
-
-
 require('./startup/routes')( app )
 require('./startup/db')()
 require('./socket')( server, ConnectedUsers )

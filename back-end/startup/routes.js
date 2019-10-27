@@ -9,4 +9,4 @@ module.exports = function(app) {
     app.use('/api/auth',auth);
     app.use('/api/messages',messages);
 
-  }
+}

@@ -40,7 +40,7 @@ class Layout extends React.Component {
       });
       socket.on('disconnect', data =>{
         console.log("disconnect",data)
-     
+
         this.props.newConnections( data )
         // this.props.removeConnection( data )
         socket.disconnect();

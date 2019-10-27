@@ -38,8 +38,6 @@ function validateAdmin(admin){
   }
 
 
-
-
 var Citizen = User.discriminator('Citizen',new Schema({
   login      : { type: String, required: false, maxlength: 50 },
 }));

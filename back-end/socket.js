@@ -35,8 +35,6 @@ module.exports = function( server, ConnectedUsers) {
       ConnectedUsers   = ConnectedUsers.filter((element) =>element.socketID != socketID)
     })
 
-
-
   });
 
   function updateConnectedUsers( client, user ){
